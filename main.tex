@@ -45,5 +45,38 @@ loss function, parameter space, and samples $X$, with high probability \todo{CIT
 \[
 L(\theta) \lesssim \hat L_n(\theta) + \sqrt{\frac{\Var(\ell(\theta, X))}{n}} + \frac{1}{n}.
 \]
+Notably, if $\ell$ is convex in $\theta$, for all $X$, then empirical risk minimization is also tractable.
+Other authors \todo{cite} have considered augmenting this approach with an empirical variance term
+(``variance-regularized empirical risk minimization''), but unfortunately this typically leads to
+non-convex formulations. Recently, however, in \todo{cite Duchi}, Duchi and Namkoong present an approach
+to variance-regularization that produces convex optimization problems. The main idea of the work is to use
+a \emph{distributionally robust} optimization objective that preserves convexity. In particular, let $f: \R_+ \to \R$ be a convex function such that $f(1) = 0$. Additionally, consider the following uncertainty set
+of distributions,
+\[
+\mathcal{U} = \{\text{distribution}~P \mid D_f(P \| \hat P_n) \leq \rho/n\}.  
+\]
+Duchi and Namkoong define a \emph{robustly regularized risk},
+\[
+\hat L_n(\theta, \mathcal{U}) := \sup_{P \in \mathcal{U}} \left(\underset{X \sim P}{\E} \ell(\theta, X) \right)=
+\sup\left\{ \underset{X \sim P}{\E} \ell(\theta, X) : D_f(P \| \hat P_n) \leq \rho/n \right\}. 
+\]
+Thus, $\hat L_n(\theta, \mathcal{U})$ is convex in $\theta$ whenever $\ell$ is. The procedure suggested in
+\todo{Cite duchi paper} is to pick the parameter according to
+\[
+\hat \theta^{\mathrm{rob}}_{n} \in \argmin_{\theta \in \Theta} \hat L_n(\theta, \mathcal{U}).
+\]
+Duchi and Namkoong present an efficient algorithm to compute such $\hat \theta^\mathrm{rob}_n$ \todo{CITE},
+and demonstrate 
+\[
+\hat L_n(\theta, \mathcal{U}) = \underset{X \sim \hat P_n}{\E} \ell(\theta, X) +\sqrt{\frac{2\rho \Var_{\hat P_n}(\ell(\theta, X))}{n}} + o_{P}(1),
+\]
+as well as, with high probability, 
+\[
+L(\hat \theta^\mathrm{rob}_n) \leq \hat L_n(\hat \theta^\mathrm{rob}_n, \mathcal{U}) + C\frac{\rho}{n},
+\]
+where $C$ depends on $\ell$ and $\Theta$. Taken together, these demonstrate that the distributionally robut
+approach outlined by Duchi and Namkoong is both tractable and a tighter approximation of the population loss
+than traditional empirical risk minimization.
 
+Our project thus picks up where \todo{cite Duchi work} leaves off. 
 \end{document}
