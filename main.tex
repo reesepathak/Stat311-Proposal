@@ -1,0 +1,49 @@
+\documentclass[11pt, reqno, oneside, letterpaper]{article}
+\usepackage[small,bf]{caption}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=0.75in]{geometry}
+\usepackage{amsthm, amsmath, pstool, version}
+\usepackage{amsfonts}
+\usepackage{amssymb, color}
+\usepackage{eucal}
+\usepackage{graphicx}
+\newcommand{\todo}[1]{{\color{red} TODO: {#1}}}
+\renewcommand*\d{\mathop{}\!\mathrm{d}}
+\graphicspath{{figs/}}
+\usepackage[all]{xy}
+\DeclareFontFamily{OT1}{rsfs}{}
+\DeclareFontShape{OT1}{rsfs}{n}{it}{<-> rsfs10}{}
+\DeclareMathAlphabet{\mathscr}{OT1}{rsfs}{n}{it}
+\input defs.tex
+\let\hat\widehat
+\begin{document}
+
+{\parindent 0pt
+Stats 311, Winter 2018-2019 \hfill
+N.\ Hirning, R.\ Pathak, J.\ Sholar \vskip 0.2in}
+
+\begin{center}
+\large{\bf Proposal}
+\end{center}
+
+In the classical empirical risk minimization setting \todo{CITE}, the goal is 
+to learn some parameter $\theta$ lying in a parameter space $\Theta$, given access to 
+samples $X$ lying in sample space $\mathcal{X}$, drawn according to distribution $P$. Indeed, upon receiving independently and identically distributed 
+(IID) samples $X^{(1)}, X^{(2)}, \dots, X^{(n)} \sim P$, the learner minimizes the \emph{empirical loss}, 
+\[
+\widehat L_n(\theta) := \underset{{X \sim \hat P_n}}{\E} \ell(\theta, X) = \frac{1}{n}\sum_{i=1}^n 
+\ell(\theta, X^{(i)}). 
+\]
+Above, $\widehat P_n := (1/n)\sum_{i=1}^n \delta_{X^{(i)}}$ denotes the \emph{empirical
+distribution} of $X$, and $\ell: \Theta \times \mathcal{X} \to \R$ denotes a loss 
+function. The motivation for this approach is that with population loss,
+\[
+L(\theta) := \underset{X \sim P}{\E} \ell(\theta, X) = \int \ell(\theta, x) \, \d P(x),
+\]
+the empirical loss is a good surrogate. Indeed, previous works demonstrate that under various assumptions on the 
+loss function, parameter space, and samples $X$, with high probability \todo{CITE}, 
+\[
+L(\theta) \lesssim \hat L_n(\theta) + \sqrt{\frac{\Var(\ell(\theta, X))}{n}} + \frac{1}{n}.
+\]
+
+\end{document}
